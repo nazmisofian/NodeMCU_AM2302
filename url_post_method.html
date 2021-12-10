@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container"></div>
+    <form id="NodeMCU" action ="" method ="post" onsubmit="return postToGoogle();">
+        <fieldset>
+            <input  placeholder="Humidity Reading Value"
+                    type="text"
+                    name="entry.1098766364"
+                    data-name="Humidity"
+                    id="Humidity"
+                    tabindex="1"
+                    required>
+        </fieldset>
+        
+        <fieldset>
+            <input  placeholder="Temperature Reading Value"
+                    type="text"
+                    name="entry.1769822575"
+                    data-name="Temperature"
+                    id="Temperature"
+                    tabindex="2"
+                    required>
+        </fieldset>
+        <fieldset>
+            <button name="submit" type='submit' id='Data-submit'
+            data-submit="...Sending">Submit</button>
+        </fieldset>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        function postToGoogle() {
+          var field1 = $("Humidity").val();
+          var field2 = $("Temperature").val();
+    
+          $.ajax({
+            url: "{https://docs.google.com/forms/u/1/d/e/1FAIpQLSetwbzHWvh1uJ9yatXke74cZJoYAXpXWej194XwKUxElXVxYg/formResponse}",
+              
+            //add your google form generated numbers below which are also the 'names' of your inputs     
+            data: {
+              "entry.1098766364": field1,
+              "entry.1769822575": field2,
+           },
+            type: "POST",
+            dataType: "xml",
+            success: function (d) {
+              $('#NodeMCU').trigger('reset');
+            },
+            error: function (x, y, z) {
+              $('#NodeMCU').trigger('reset');
+            }
+          });
+          return false;
+        }
+      </script>
+</form>
+</div>
+</body>
+</html>
